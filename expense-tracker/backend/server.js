@@ -14,11 +14,11 @@ const allowedCategories = [
 const app = express();
 const PORT = 8001;
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 
-// PostgreSQL connection
+
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -27,7 +27,7 @@ const pool = new Pool({
     port: process.env.DB_PORT
 });
 
-// Test route
+
 app.get("/", (req, res) => {
     res.json({ message: "Expense Tracker API is working!" });
 });
@@ -100,7 +100,7 @@ app.post("/api/expenses", async (req, res) => {
     try {
         const { title, amount, category, date } = req.body;
 
-        // Validation
+        
         if (!title || !amount || !category || !date) {
             return res.status(400).json({
                 error: "All fields are required"
@@ -141,7 +141,7 @@ app.put("/api/expenses/:id", async (req, res) => {
         const id = req.params.id;
         const { title, amount, category, date } = req.body;
 
-        // Validation
+        
         if (!title || !amount || !category || !date) {
             return res.status(400).json({
                 error: "All fields are required"

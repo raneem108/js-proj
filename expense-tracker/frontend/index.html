@@ -89,7 +89,7 @@
                 <label for="title" class=" m-2 form-label" >Title:</label>
                 <input id="title" class="m-1 form-control" type="text">
                 <label for="amount" class=" m-1 form-label" >Amount:</label>
-                <input id="amount" class=" m-1 form-control" type="number">
+                <input id="amount" class=" m-1 form-control" type="number" step="0.01" min="0">
                 <label for="category" class=" m-1 form-label" >Category:</label>
                 <select  id="category" class="form-select ms-1">
                 <option value="" selected>Select category</option>
@@ -154,7 +154,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="editAmount" class="form-label">Amount</label>
-                                <input type="number" class="form-control" id="editAmount" required>
+                                <input type="number" class="form-control" id="editAmount" step="0.01" min="0" required>
                             </div>
                             <div class="mb-3">
                                 <label for="editCategory" class="form-label">Category</label>

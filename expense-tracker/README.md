@@ -141,3 +141,8 @@ Category Percentage =
 Category Total / Total Expenses × 100
 ```
 
+Github repository link : https://github.com/raneem108/js-proj.git
+
+
+Demo video link : https://drive.google.com/file/d/1HEHjq_ijKm7sYa9OP6zi2C6zqtVOHave/view?usp=sharing  
+

@@ -41,7 +41,7 @@ app.get("/api/expenses", async (req, res) => {
                 category,
                 TO_CHAR(date, 'YYYY-MM-DD') AS date
              FROM expenses
-             ORDER BY date DESC, id DESC`
+             ORDER BY id asc`
         );
 
         const expenses = result.rows.map(expense => ({
@@ -214,6 +214,4 @@ app.delete("/api/expenses/:id", async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT);

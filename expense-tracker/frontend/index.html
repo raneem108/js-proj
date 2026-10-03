@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <header class="bg-secondary">
+        <nav class="navbar navbar-expand-lg bg-secondary ">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><h2>
+    Expense Tracker
+    <br>
+    <h5 class="text-dark">
+        Track your expenses easily.
+    </h5>
+</h2>
+</a>
+    
+        
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Add Expense</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">View Expenses</a>
+        </li>
+        
+        </ul>
+        </div>
+        </div>
+        </nav>
+       
+       
+    </header>
+    <main>
+      <div class="container my-4">
+    <div class="summary-cards">
+
+        <div>
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Total Amount</h5>
+                    <p class="card-text" id="totalAmount">0.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Number of Expenses</h5>
+                    <p class="card-text" id="expenseCount">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Highest Expense</h5>
+                    <p class="card-text" id="highestExpense">0.00</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="myAlert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+    <span id="alertMessage"></span>
+    <button type="button" class="btn-close" aria-label="Close"></button>
+</div>  
+        <div style="height: 450px; width: 450px; margin: auto;">
+        <canvas id="donutChart" ></canvas>
+        </div>
+        <form id="expenseForm" class=" my-5 container border">
+            <div class="m-3">
+                <h3>Add New Expense</h3>
+                <label for="title" class=" m-2 form-label" >Title:</label>
+                <input id="title" class="m-1 form-control" type="text">
+                <label for="amount" class=" m-1 form-label" >Amount:</label>
+                <input id="amount" class=" m-1 form-control" type="number">
+                <label for="category" class=" m-1 form-label" >Category:</label>
+                <select  id="category" class="form-select ms-1">
+                <option value="" selected>Select category</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Bills">Bills</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+                </select >
+                <label for="date" class=" m-1 form-label" >Date:</label>
+                <input id="date" class=" m-1 form-control" type="date">
+                <button id="addExpenseBtn" type="submit" class="btn btn-primary m-3 border" >Add Expense </button>
+            </div>
+        </form>
+        <div class="ms-5 mt-4">
+          <select id="filterCategory" class="form-select w-25 ms-3">
+            <option value="">All Categories</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Bills">Bills</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div id="loadingSpinner" class="text-center my-3" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Loading expenses...</p>
+        </div>
+
+        <div class="table-responsive">
+        <table class="table table-striped my-5 container border table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="expensesTableBody">
+                <!-- Expenses will be dynamically added here -->
+            </tbody>
+        </table>
+        </div>
+        <div class="modal fade" id="editexpensemodal" tabindex="-1" aria-labelledby="editexpensemodalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editexpensemodalLabel">Edit Expense</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editExpenseForm">
+                            <input type="hidden" id="editExpenseId">
+                            <div class="mb-3">
+                                <label for="editTitle" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="editTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editAmount" class="form-label">Amount</label>
+                                <input type="number" class="form-control" id="editAmount" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editCategory" class="form-label">Category</label>
+                                <select class="form-select" id="editCategory" required>
+                                    <option value="">Select category</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Transport">Transport</option>
+                                    <option value="Bills">Bills</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="editDate" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+           </div>
+
+       </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
